@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Questions et Réponses</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/stylecss.css" rel="stylesheet" type="text/css"/>
+        <script src="js/libs/jquery/jquery.js" type="text/javascript"></script>
+    </head>
+
+    <body>
+        <div id="qr">Questions et Réponses</div>
+
+        <input id="button" type="button" value="Ajouter"/>
+
+        <div id="compteur">0</div>
+
+
+        <script>
+
+            function randomNumber(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            $(document).ready(function () {
+                let compte = 0;
+
+                $("#button").click(function () {
+                    // le champ va demander de saisir un la question et la réponse
+
+                    let question = prompt("Veuillez saisir une question");
+                    let reponse = prompt("Veuillez saisir une réponse");
+
+                    compte = compte + 1;
+                    $("#compteur").html(compte);
+
+                    let randomId = randomNumber(100, 1000);
+
+                    $("#qr").after(
+                            "<div id=\"qer" + randomId + "\" class='qer'>" +
+                            "<div class=\"title\">La question est :</div>" +
+                            "<div class=\"horizontal\">" +
+                            "<div id=\"question\" class=\"field_content\">" + question + "</div>" +
+                            "<input id=\"modifierQ" + randomId + "\" class=\"modifier\" type=\"button\" value=\"Modifier\"/>" +
+                            "</div>" +
+                            "<div class=\"title\">La réponse est :</div>" +
+                            "<div class=\"horizontal\">" +
+                            "<div id=\"reponse\" class=\"field_content\">" + reponse + "</div>" +
+                            "<input id=\"modifierR" + randomId + "\" class=\"modifier\" type=\"button\" value=\"Modifier\"/>" +
+                            "</div>" +
+                            "<input id=\"supprimer" + randomId + "\" class=\"supprimer\" type=\"button\" value=\"Supprimer\"/>" +
+                            "</div>"
+                            );
+
+                    $("#supprimer" + randomId).click(function () {
+                        $(this).parent("div").slideToggle(function () {
+                            compte = compte - 1;
+                            $("#compteur").html(compte);
+                            $(this).remove();
+                        });
+
+                    });
+
+                    $("#modifierQ" + randomId).click(function () {
+                        var question = prompt("Veuillez saisir une question");
+                        $(this).siblings(".field_content").html(question);
+                    });
+
+                    $("#modifierR" + randomId).click(function () {
+                        var reponse = prompt("Veuillez saisir une réponse");
+                        $(this).siblings(".field_content").html(reponse);
+                    });
+
+                });
+            });
+
+        </script>
+
+    </body>
+
+    <footer>
+        © Ny Ony RAKOTONDRAMONJA / DUT AS INFO (2021/2022)
+    </footer>
+
+</html>
